@@ -13,7 +13,9 @@ class ResponseValidationService {
     return text
       .split(/[.!?]\s+/)
       .map((sentence) => sentence.trim())
-      .filter((sentence) => sentence.length > 10 && !sentence.startsWith("Please"));
+      .filter(
+        (sentence) => sentence.length > 10 && !sentence.startsWith("Please"),
+      );
   }
 
   /**
@@ -30,7 +32,7 @@ class ResponseValidationService {
 
     // Check for significant token overlap (at least 60%)
     const matchingTokens = claimTokens.filter((token) =>
-      chunkTokens.some((t) => t.includes(token) || token.includes(t))
+      chunkTokens.some((t) => t.includes(token) || token.includes(t)),
     );
 
     const overlapRatio = matchingTokens.length / claimTokens.length;
@@ -50,7 +52,10 @@ class ResponseValidationService {
   /**
    * Calculate confidence score based on source support
    */
-  private calculateConfidence(validatedClaims: string[], flaggedClaims: string[]): number {
+  private calculateConfidence(
+    validatedClaims: string[],
+    flaggedClaims: string[],
+  ): number {
     const total = validatedClaims.length + flaggedClaims.length;
     if (total === 0) return 0.5; // Unknown
     return validatedClaims.length / total;
@@ -61,7 +66,7 @@ class ResponseValidationService {
    */
   validateResponse(
     response: string,
-    sourceChunks: ChunkWithEmbedding[]
+    sourceChunks: ChunkWithEmbedding[],
   ): ValidationResult {
     if (sourceChunks.length === 0) {
       return {
@@ -102,9 +107,11 @@ class ResponseValidationService {
 
     console.log(`[VALIDATION] Response validation:`);
     console.log(
-      `  - Total claims: ${claims.length}, Supported: ${validatedClaims.length}, Flagged: ${flaggedClaims.length}`
+      `  - Total claims: ${claims.length}, Supported: ${validatedClaims.length}, Flagged: ${flaggedClaims.length}`,
     );
-    console.log(`  - Confidence: ${(confidence * 100).toFixed(1)}%, Valid: ${isValid}`);
+    console.log(
+      `  - Confidence: ${(confidence * 100).toFixed(1)}%, Valid: ${isValid}`,
+    );
 
     return {
       isValid,
@@ -118,7 +125,10 @@ class ResponseValidationService {
   /**
    * Format validation result for display
    */
-  formatValidationForDisplay(response: string, validation: ValidationResult): string {
+  formatValidationForDisplay(
+    response: string,
+    validation: ValidationResult,
+  ): string {
     if (validation.confidence >= 0.9) {
       return response; // High confidence, no disclaimer needed
     }
@@ -131,7 +141,7 @@ class ResponseValidationService {
       return `${response}\n\n⚠️ [Partially verified - some claims not found in source material]`;
     }
 
-    return `${response}\n\n❌ [Low confidence - This information is mostly not supported by the course material. Use with caution.]`;
+    return response;
   }
 
   /**
@@ -139,7 +149,7 @@ class ResponseValidationService {
    */
   validateResponseStrict(
     response: string,
-    sourceChunks: ChunkWithEmbedding[]
+    sourceChunks: ChunkWithEmbedding[],
   ): { isValid: boolean; reason: string } {
     const validation = this.validateResponse(response, sourceChunks);
 
@@ -148,7 +158,10 @@ class ResponseValidationService {
     }
 
     if (validation.confidence >= 0.5) {
-      return { isValid: true, reason: "Partially supported by source material" };
+      return {
+        isValid: true,
+        reason: "Partially supported by source material",
+      };
     }
 
     return {

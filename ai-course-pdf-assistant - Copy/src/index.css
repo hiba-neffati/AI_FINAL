@@ -1,1 +1,61 @@
 @import "tailwindcss";
+
+:root {
+  color-scheme: dark;
+}
+
+html.light {
+  color-scheme: light;
+}
+
+html.light body {
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+html.light [class*="bg-slate-950"] {
+  background-color: #ffffff !important;
+}
+
+html.light [class*="bg-slate-900"] {
+  background-color: #f8fafc !important;
+}
+
+html.light [class*="bg-slate-800"] {
+  background-color: #e2e8f0 !important;
+}
+
+html.light [class*="border-slate-800"] {
+  border-color: #cbd5e1 !important;
+}
+
+html.light [class*="border-slate-700"] {
+  border-color: #cbd5e1 !important;
+}
+
+html.light .text-slate-100,
+html.light .text-white {
+  color: #0f172a !important;
+}
+
+html.light .text-slate-300 {
+  color: #475569 !important;
+}
+
+html.light .text-slate-400 {
+  color: #64748b !important;
+}
+
+html.light .text-slate-500 {
+  color: #64748b !important;
+}
+
+html.light .text-slate-600 {
+  color: #475569 !important;
+}
+
+html.light .bg-slate-900\/10,
+html.light .bg-slate-900\/20,
+html.light .bg-slate-950\/10 {
+  background-color: rgba(15, 23, 42, 0.06) !important;
+}
